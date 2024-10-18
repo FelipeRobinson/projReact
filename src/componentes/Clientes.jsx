@@ -1,34 +1,25 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 
 class Clientes extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            ListaDeClientes : [
-            {
-                idClie: 1,
-                cpfClie: "11111111111",
-                nomeClie: "Ana Beatriz Cardoso",
-                emailClie: "cardoso@gmail.com",
-                dataNiverClie: "05/12/1298",
-            },
-            {
-                idClie: 2,
-                cpfClie: "11111111112",
-                nomeClie: "Alexia Cardoso",
-                emailClie: "cardosinho@gmail.com",
-                dataNiverClie: "23/09/2009",
-            },
-            {
-                idClie: 3,
-                cpfClie: "11111111113",
-                nomeClie: "Pedro Viniccius",
-                emailClie: "vini@gmail.com",
-                dataNiverClie: "12/12/1212",
-            },
-            ]
+            ListaDeClientes : []
         }
+    }
+
+    // metodo do OBJ COMPONENT que monta um componente
+    componentDidMount() {
+        fetch("http://localhost:3333/Clientes")
+        .then(resposta => resposta.json())
+        .then(dadosVindoDaAPI => {
+            this.state({ ListaDeClientes: dadosVindoDaAPI })
+        })
+    }
+
+    // metodo do OBJ COMPONENT que desmonta um componente
+    componentWillUnmount() {
     }
 
     render() {
@@ -51,7 +42,10 @@ class Clientes extends React.Component {
                                 <td>{ cliente.nomeClie }</td>
                                 <td>{ cliente.emailClie }</td>
                                 <td>{ cliente.dataNiverClie }</td>
-                                <td>Atualizar       Excluir</td>
+                                <td>
+                                    <Button variant="primary">Atualizar</Button>
+                                    <Button variant="danger">Excluir</Button>
+                                </td>
                             </tr>
                         )
                     }
